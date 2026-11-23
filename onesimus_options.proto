@@ -1,7 +1,6 @@
-// SPDX-License-Identifier: AGPL-3.0-only
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// SPDX-FileCopyrightText: 2025-2026 Jörg Bernau <contact@onesimus.io>
 // Onesimus - https://onesimus.io
-//
-// Copyright (C) 2025-2026 Jörg Bernau <Joerg.Bernau@onesimus.io>
 //
 // Custom Proto-Options fuer Director Command-Messages.
 // Diese Optionen werden vom Python-Generator (generate_commands.py)

@@ -117,7 +117,7 @@ Generated C++ namespaces follow the packages (`onesimus::director`,
 
 ## License
 
-GNU Affero General Public License v3.0 only (`AGPL-3.0-only`); see [LICENSE](LICENSE).
+GNU Affero General Public License v3.0 or later (`AGPL-3.0-or-later`); see [LICENSE](LICENSE).
 Parts derived from Bareos keep their original copyright notices.
 
-Maintainer: Jörg Bernau <Joerg.Bernau@onesimus.io>.
+Maintainer: Jörg Bernau <contact@onesimus.io>.
