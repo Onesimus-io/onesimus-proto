@@ -69,7 +69,7 @@ repository.
 ### As Git submodule
 
 ```bash
-git submodule add git@github.com:Beerlesklopfer/onesimus-proto.git proto
+git submodule add git@github.com:Onesimus-io/onesimus-proto.git proto
 ```
 
 ### In Rust (tonic-build)
