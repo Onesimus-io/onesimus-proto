@@ -180,13 +180,17 @@ message ConfigureUpdateCommand {
   option (onesimus.command_name) = "configure update";
   option (onesimus.help_text) = "Update an existing director resource";
   option (onesimus.usage) = "configure update <resourcetype> name=<name> "
-                          "key=value [key=value ...]";
+                          "key=value [key=value ...] [overlay]";
   option (onesimus.audit_event) = true;
 
   ConfigureResourceType resource_type = 1 [(onesimus.required) = true];
   string name = 2   [(onesimus.required) = true];
   // Key=value pairs to update
   map<string, string> directives = 3;
+  // Onesimus extension: write the directives to the overlay directory
+  // (/etc/onesimus/odir.d) instead of bareos-dir.d, for directives Bareos
+  // does not know.
+  bool overlay = 4 [(onesimus.bare_flag) = true];
 }
 
 // configure export client=<client>
