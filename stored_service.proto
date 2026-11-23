@@ -12,9 +12,9 @@ package onesimus.stored;
 // the SD port, one message per frame and without BNET length headers, so
 // the Bareos Hello, the mutual CRAM-MD5 authentication and every command
 // run unchanged inside the TLS stream. No command is executed before the
-// authentication succeeds. Onesimus-only extensions (branches, media
-// events, stripe information) will be added here as typed messages later;
-// they are not part of this version.
+// authentication succeeds. Onesimus-only extensions are typed messages in
+// the same stream: branches (BranchFrame, P2b) are in this version; media
+// events and stripe information will follow.
 service StorageDaemon {
   // Director <-> SD control connection: "Hello Director <name> calling",
   // CRAM-MD5 with the Storage password, then job setup (JobId=, use
@@ -37,5 +37,47 @@ message StoredFrame {
   oneof frame {
     bytes payload = 1;
     int32 signal = 2;
+    // Branch (3-2-1 on the fly), only odir <-> osd over gRPC; a bareos-dir
+    // or bareos-sd never sees it.
+    BranchFrame branch = 3;
   }
+}
+
+// Branches (plan docs/plans/OSD-GERAETE-UND-VERTEILUNG.md, "Zweige"): the FD
+// reads once, osd gives the stream to several jobs. The main job is an
+// ordinary backup job; each branch is a job of its own (own JobId, level,
+// pool, storage/device, volumes, catalog records) that has no FD session of
+// its own but attaches to the main job's stream in osd. Sent on the
+// Director's control connections.
+message BranchFrame {
+  oneof message {
+    // Director -> SD on the main job's connection, after its Job command and
+    // before "run": the branch jobs that will attach.
+    BranchPlan plan = 1;
+    // Director -> SD on a branch job's connection, after its Job command and
+    // "use storage", in place of "run": take the stream of the main job.
+    BranchAttach attach = 2;
+    // SD -> Director: the answer to a plan or an attach.
+    BranchReply reply = 3;
+  }
+}
+
+// The branch jobs a main job waits for before it starts writing.
+message BranchPlan {
+  // Unique job names (Job=<name> of the Job command) of the branch jobs.
+  repeated string branch_jobs = 1;
+}
+
+// A branch job attaches to a main job.
+message BranchAttach {
+  // Unique job name of the main job.
+  string main_job = 1;
+}
+
+// Answer of the SD to a BranchPlan or BranchAttach.
+message BranchReply {
+  // False: refused; the Director ends the job with the text as error.
+  bool ok = 1;
+  // Reason when refused, else empty.
+  string text = 2;
 }
