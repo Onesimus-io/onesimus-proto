@@ -117,7 +117,7 @@ Generated C++ namespaces follow the packages (`onesimus::director`,
 
 ## License
 
-GNU Affero General Public License v3.0 only (`AGPL-3.0-only`); see [LICENSE](LICENSE). The files follow the Bareos protocol definitions and carry the copyright lines of the Bareos rights holders; whether parts may be released under "or later" is still being checked (see docs/LIZENZEN.md of onesimus-director).
+Mixed, per file (SPDX header in each file; see [LICENSE](LICENSE)): `usage`, `podman_broker`, `postgresql_broker`, `openldap_broker` and `onesimus_options` are Onesimus's own definitions under `AGPL-3.0-or-later`. The files that follow the Bareos protocol definitions (`plugin_ccc`, `filed_plugin`, `director_api`, `director_service`, `filed_service`, `stored_service`, `director_commands`) stay `AGPL-3.0-only` and carry the copyright lines of the Bareos rights holders.
 Parts derived from Bareos keep their original copyright notices.
 
 Maintainer: Jörg Bernau <contact@onesimus.io>.
