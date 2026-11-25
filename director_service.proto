@@ -116,6 +116,10 @@ message CommandResponse {
   string text_output = 2;
   bytes json_output = 3;
   string error_message = 4;
+  // The command would ask the user (a yes/no question, a selection, an input) and ExecuteCommand
+  // has no dialog, so the Director ran it like Bareos' batch mode. An interactive console runs it
+  // again in a session with dialog (BNET) to ask the question (Onesimus).
+  bool dialog_required = 5;
 }
 
 // ==========================================================================
